@@ -31,9 +31,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import android.Manifest;
@@ -108,6 +111,8 @@ public class MainActivity extends AppCompatActivity implements OnCompleteListene
 
     private PendingGeofenceTask mPendingGeofenceTask = PendingGeofenceTask.NONE;
 
+    private EditText geoField;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,7 +133,10 @@ public class MainActivity extends AppCompatActivity implements OnCompleteListene
         // Get the geofences used. Geofence data is hard coded in this sample.
         populateGeofenceList();
 
+        geoField = (EditText) findViewById(R.id.add_geofence_field);
+
         mGeofencingClient = LocationServices.getGeofencingClient(this);
+
     }
 
     @Override
@@ -146,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements OnCompleteListene
      * Builds and returns a GeofencingRequest. Specifies the list of geofences to be monitored.
      * Also specifies how the geofence notifications are initially triggered.
      */
-    private GeofencingRequest getGeofencingRequest() {
+    private GeofencingRequest getGeofencingRequest(ArrayList<Geofence> mGeofenceList) {
         GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
 
         // The INITIAL_TRIGGER_ENTER flag indicates that geofencing service should trigger a
@@ -165,6 +173,10 @@ public class MainActivity extends AppCompatActivity implements OnCompleteListene
      * Adds geofences, which sets alerts to be notified when the device enters or exits one of the
      * specified geofences. Handles the success or failure results returned by addGeofences().
      */
+    public void submitLocation(View view){
+        String val = geoField.getText().toString();
+
+    }
     public void addGeofencesButtonHandler(View view) {
         if (!checkPermissions()) {
             mPendingGeofenceTask = PendingGeofenceTask.ADD;
@@ -185,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements OnCompleteListene
             return;
         }
 
-        mGeofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent())
+        mGeofencingClient.addGeofences(getGeofencingRequest(mGeofenceList), getGeofencePendingIntent())
                 .addOnCompleteListener(this);
     }
 
