@@ -63,6 +63,7 @@ import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
 import com.google.android.gms.location.GeofencingRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -160,10 +161,22 @@ public class MainActivity extends AppCompatActivity implements OnCompleteListene
 
         try {
             startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
+            //Place place = PlacePicker.getPlace();
         } catch (GooglePlayServicesRepairableException e) {
             e.printStackTrace();
         } catch (GooglePlayServicesNotAvailableException e) {
             e.printStackTrace();
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        int PLACE_PICKER_REQUEST = 1;
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(data, this);
+                String toastMsg = String.format("Place: %s %s", place.getName(), place.getLatLng());
+                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+            }
         }
     }
 
