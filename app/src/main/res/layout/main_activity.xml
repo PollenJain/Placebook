@@ -31,13 +31,13 @@
         android:onClick="addGeofencesButtonHandler"
         android:text="@string/add_geofences"/>
 
-    <EditText
+    <Button
         android:id="@+id/add_geofence_field"
-        android:layout_width="100dp"
+        android:layout_width="10dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:onClick="addGeofenceFieldHandler"
-        android:text="@string/add_geofences"/>
+        android:onClick="getPlace"
+        android:text="@string/select_location"/>
 
     <Button
         android:id="@+id/submit_geofence"

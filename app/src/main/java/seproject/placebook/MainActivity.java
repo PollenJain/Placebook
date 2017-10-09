@@ -136,10 +136,11 @@ public class MainActivity extends AppCompatActivity implements OnCompleteListene
         // Get the geofences used. Geofence data is hard coded in this sample.
         populateGeofenceList();
 
-        geoField = (EditText) findViewById(R.id.add_geofence_field);
+        //geoField = (EditText) findViewById(R.id.add_geofence_field);
 
         mGeofencingClient = LocationServices.getGeofencingClient(this);
 
+        /*
         int PLACE_PICKER_REQUEST = 1;
         PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
 
@@ -150,7 +151,20 @@ public class MainActivity extends AppCompatActivity implements OnCompleteListene
         } catch (GooglePlayServicesNotAvailableException e) {
             e.printStackTrace();
         }
+        */
+    }
 
+    public void getPlace(View view){
+        int PLACE_PICKER_REQUEST = 1;
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+
+        try {
+            startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
+        } catch (GooglePlayServicesRepairableException e) {
+            e.printStackTrace();
+        } catch (GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
